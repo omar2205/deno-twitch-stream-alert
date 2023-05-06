@@ -71,7 +71,7 @@ export function handleTwitchRequest(body: string) {
   if (data.event) {
     console.log('Notifications received')
     console.log(data.event)
-    if (data.event.type === 'stream.online') {
+    if (data.event.type === 'live') {
       console.log(`Streamer ${data.event.broadcaster_user_name} is ONLINE`)
       sendDiscordNotification()
     } else if (data.event.type === 'stream.offline') {
