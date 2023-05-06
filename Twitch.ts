@@ -90,12 +90,16 @@ export async function sendDiscordNotification() {
 
   if (!DISCORD_CHANNEL_WEBHOOK_URL) throw new Error('No Discord webhook')
 
+  const content = await Deno.readTextFile('./message.txt').catch(() =>
+    ':rotating_light: @everyone\nLive NOW'
+  )
+
   const res = await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ content: ':rotating_light: @everyone\nLive NOW' }),
+    body: JSON.stringify({ content }),
   })
 
   if (res.status !== 204) {
