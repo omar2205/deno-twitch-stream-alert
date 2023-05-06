@@ -1,5 +1,8 @@
 # Get alerts in Discord from Twitch
 
+<p align="center"><img src="https://user-images.githubusercontent.com/1373867/236632257-0d193211-42d3-4a4a-ac7b-cc5105e1bd6d.png" alt="a discord notifications" /></p>
+
+
 Sends an alert using Twitch webhooks to a Discord channel
 
 # Usage
