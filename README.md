@@ -17,4 +17,5 @@ Sends an alert using Twitch webhooks to a Discord channel
     * For `DISCORD_CHANNEL_WEBHOOK_URL` we will need to create a Discord channel webhook. Go to the channel you want to send notifications, and click edit and go to Integrations. Click view webhooks in the Webhooks sections and click New Webhook. You can customize your Bot and click Copy Webhook URL.
 3. Create a project in Deno deploy and enter all the variables from the `.env` don't worry about `CALLBACK_URL` we will get it after.
 4. Copy your deno deploy URL from `Overview` tab (the smallest .deno.dev URL)
-
+5. Get the streamer `user id` (Google it for now, Coming soon)
+6. Run `deno task user STREAMER_ID`

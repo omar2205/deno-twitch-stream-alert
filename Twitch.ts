@@ -1,3 +1,6 @@
+import { load } from 'https://deno.land/std@0.186.0/dotenv/mod.ts'
+await load({ export: true })
+
 const CALLBACK_URL = Deno.env.get('CALLBACK_URL') || ''
 const CLIENT_SECRET = Deno.env.get('CLIENT_SECRET') || ''
 const CLIENT_ID = Deno.env.get('CLIENT_ID') || ''
@@ -24,8 +27,8 @@ export async function getAccessToken() {
 
 export async function addWebhook(streamerId: string) {
   const payload = {
-    'type': 'stream.onlnine',
-    'version': '2',
+    'type': 'stream.online',
+    'version': '1',
     'condition': {
       'broadcaster_user_id': streamerId,
     },
