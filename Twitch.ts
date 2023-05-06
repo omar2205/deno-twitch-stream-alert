@@ -2,6 +2,7 @@ const CALLBACK_URL = Deno.env.get('CALLBACK_URL') || ''
 const CLIENT_SECRET = Deno.env.get('CLIENT_SECRET') || ''
 const CLIENT_ID = Deno.env.get('CLIENT_ID') || ''
 const WEBHOOK_SECRET = Deno.env.get('WEBHOOK_SECRET') || ''
+const ACCESS_TOKEN = Deno.env.get('ACCESS_TOKEN') || ''
 
 export async function getAccessToken() {
   const body = new URLSearchParams()
@@ -35,7 +36,7 @@ export async function addWebhook(streamerId: string) {
     },
   }
 
-  const token = 'q3421mo2q2zfewmuqo1gbbv6nhbkkk'//await getAccessToken()
+  const token = ACCESS_TOKEN
   const headers = {
     'Client-ID': CLIENT_ID,
     'Authorization': `Bearer ${token}`,
