@@ -1,4 +1,3 @@
-import nodeCrypto from 'node:crypto'
 import { bufferToHex } from 'https://deno.land/x/hextools@v1.0.0/mod.ts'
 import { timingSafeEqual } from 'https://deno.land/std@0.186.0/crypto/timing_safe_equal.ts'
 const encoder = new TextEncoder()
