@@ -24,7 +24,7 @@ export async function getAccessToken() {
 export async function addWebhook(streamerId: string) {
   const payload = {
     'type': 'stream.onlnine',
-    'version': '1',
+    'version': '2',
     'condition': {
       'broadcaster_user_id': streamerId,
     },
@@ -35,7 +35,7 @@ export async function addWebhook(streamerId: string) {
     },
   }
 
-  const token = await getAccessToken()
+  const token = 'q3421mo2q2zfewmuqo1gbbv6nhbkkk'//await getAccessToken()
   const headers = {
     'Client-ID': CLIENT_ID,
     'Authorization': `Bearer ${token}`,
@@ -86,6 +86,7 @@ async function sendDiscordNotification() {
   if (!DISCORD_CHANNEL_WEBHOOK_URL) throw new Error('No Discord webhook')
 
   await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
