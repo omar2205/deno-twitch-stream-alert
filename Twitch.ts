@@ -60,7 +60,7 @@ export async function addWebhook(streamerId: string) {
   }
 }
 
-export function handleTwitchRequest(body: string) {
+export async function handleTwitchRequest(body: string) {
   const data = JSON.parse(body)
 
   if (data.challenge) {
@@ -73,7 +73,7 @@ export function handleTwitchRequest(body: string) {
     console.log(data.event)
     if (data.event.type === 'live') {
       console.log(`Streamer ${data.event.broadcaster_user_name} is ONLINE`)
-      sendDiscordNotification()
+      await sendDiscordNotification()
     } else if (data.event.type === 'stream.offline') {
       console.log(`Streamer ${data.event.broadcaster_user_name} is OFFLINE`)
     }
@@ -87,11 +87,13 @@ async function sendDiscordNotification() {
 
   if (!DISCORD_CHANNEL_WEBHOOK_URL) throw new Error('No Discord webhook')
 
-  await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
+  const res = await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: `{"content": ":rotating_light: hey @everyone\nLIVE NOW"}`
   })
+
+  console.log('[Discord] status', res.status)
 }

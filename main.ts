@@ -26,7 +26,7 @@ app.post('/', async (ctx) => {
           HMAC_PREFIX + hmacMessage,
           headers.get(TWITCH_MESSAGE_SIGNATURE) || '',
         )
-      ) return handleTwitchRequest(body)
+      ) return await handleTwitchRequest(body)
     }
 
     //return JSON.parse(body)['challenge']
