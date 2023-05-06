@@ -80,7 +80,7 @@ export async function handleTwitchRequest(body: string) {
   }
 }
 
-async function sendDiscordNotification() {
+export async function sendDiscordNotification() {
   const DISCORD_CHANNEL_WEBHOOK_URL = Deno.env.get(
     'DISCORD_CHANNEL_WEBHOOK_URL',
   )
@@ -90,10 +90,12 @@ async function sendDiscordNotification() {
   const res = await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: `{"content": ":rotating_light: hey @everyone\nLIVE NOW"}`
+    body: JSON.stringify({ content: ':rotating_light: @everyone\nLive NOW' }),
   })
 
-  console.log('[Discord] status', res.status)
+  if (res.status !== 204) {
+    console.log('[Discord] status', res)
+  }
 }
