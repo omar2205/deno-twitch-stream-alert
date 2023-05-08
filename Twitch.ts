@@ -83,16 +83,21 @@ export async function handleTwitchRequest(body: string) {
   }
 }
 
-export async function sendDiscordNotification() {
+export async function sendDiscordNotification(streamerId: string) {
   const DISCORD_CHANNEL_WEBHOOK_URL = Deno.env.get(
     'DISCORD_CHANNEL_WEBHOOK_URL',
   )
 
   if (!DISCORD_CHANNEL_WEBHOOK_URL) throw new Error('No Discord webhook')
 
-  const content = await Deno.readTextFile('./message.txt').catch(() =>
+  let content = await Deno.readTextFile('./message.txt').catch(() =>
     ':rotating_light: @everyone\nLive NOW'
   )
+
+  if (content.includes('{{title}}')) {
+    const stream_title = await getStreamTitle(streamerId)
+    content = content.replace('{{title}}', stream_title)
+  }
 
   const res = await fetch(DISCORD_CHANNEL_WEBHOOK_URL, {
     method: 'POST',
@@ -105,4 +110,19 @@ export async function sendDiscordNotification() {
   if (res.status !== 204) {
     console.log('[Discord] status', res)
   }
+}
+
+async function getStreamTitle(streamerId: string) {
+  const token = ACCESS_TOKEN
+  const headers = {
+    'Client-ID': CLIENT_ID,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  }
+  const response = await fetch(
+    `https://api.twitch.tv/helix/channels?broadcaster_id=${streamerId}`,
+    { headers },
+  )
+    .then((r) => r.json())
+  return response.data[0].title
 }
