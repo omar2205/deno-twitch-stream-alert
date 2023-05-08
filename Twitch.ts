@@ -76,7 +76,7 @@ export async function handleTwitchRequest(body: string) {
     console.log(data.event)
     if (data.event.type === 'live') {
       console.log(`Streamer ${data.event.broadcaster_user_name} is ONLINE`)
-      await sendDiscordNotification()
+      await sendDiscordNotification(data.event.broadcaster_user_id)
     } else if (data.event.type === 'stream.offline') {
       console.log(`Streamer ${data.event.broadcaster_user_name} is OFFLINE`)
     }
@@ -112,7 +112,7 @@ export async function sendDiscordNotification(streamerId: string) {
   }
 }
 
-async function getStreamTitle(streamerId: string) {
+export async function getStreamTitle(streamerId: string) {
   const token = ACCESS_TOKEN
   const headers = {
     'Client-ID': CLIENT_ID,
@@ -124,5 +124,5 @@ async function getStreamTitle(streamerId: string) {
     { headers },
   )
     .then((r) => r.json())
-  return response.data[0].title
+  return response.data[0].title || ''
 }
